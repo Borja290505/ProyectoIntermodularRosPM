@@ -3,7 +3,12 @@ package CONTROLADOR;
 import DAO.ClienteDAO;
 import MODELO.Cliente;
 import UTIL.LoginApp;
-import VISTA.*;
+import VISTA.MenuCliente;
+import VISTA.MenuVehiculo;
+import VISTA.PaginaInicio;
+import VISTA.ClienteVista;
+import VISTA.InicioSesionCliente;
+import VISTA.MenuPrincipal;
 
 public class ClienteControlador {
 
@@ -31,7 +36,7 @@ public class ClienteControlador {
     // =========================
     private void abrirRegistro() {
 
-        RegistroCliente registroVista = new RegistroCliente();
+        ClienteVista.RegistroCliente registroVista = new ClienteVista.RegistroCliente();
 
         registroVista.getBtnRegistrar().addActionListener(e -> {
             try {
@@ -88,22 +93,33 @@ public class ClienteControlador {
 
         MenuPrincipal menu = new MenuPrincipal();
 
-        // Botón opciones / alta vehículo
-        menu.getBtnAltaVehiculo().addActionListener(e -> {
+        menu.getBtnOpcionesVehiculos().addActionListener(e -> {
             menu.dispose();
             abrirMenuVehiculo();
         });
+
+        menu.getBtnOpcionesClientes().addActionListener(e -> {
+            menu.dispose();
+            abrirMenuCliente();
+        });
     }
 
-    // =========================
-    // MENÚ VEHÍCULOS
-    // =========================
+
     private void abrirMenuVehiculo() {
 
         MenuVehiculo menuVehiculo = new MenuVehiculo();
 
         menuVehiculo.getBtnVolver().addActionListener(e -> {
             menuVehiculo.dispose();
+            abrirMenuPrincipal();
+        });
+    }
+
+    private void abrirMenuCliente() {
+        MenuCliente menuCliente = new MenuCliente();
+
+        menuCliente.getBtnVolver().addActionListener(e -> {
+            menuCliente.dispose();
             abrirMenuPrincipal();
         });
     }
