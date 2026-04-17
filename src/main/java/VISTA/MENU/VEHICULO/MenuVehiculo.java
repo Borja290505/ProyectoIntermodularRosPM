@@ -1,4 +1,6 @@
-package VISTA;
+package VISTA.MENU.VEHICULO;
+
+import VISTA.VentanaBase;
 
 import javax.swing.*;
 import java.awt.*;

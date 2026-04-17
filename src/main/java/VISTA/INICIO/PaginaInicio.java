@@ -1,4 +1,6 @@
-package VISTA;
+package VISTA.INICIO;
+
+import VISTA.VentanaBase;
 
 import javax.swing.*;
 import java.awt.*;

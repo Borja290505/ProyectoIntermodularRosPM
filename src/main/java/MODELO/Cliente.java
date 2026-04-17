@@ -100,4 +100,9 @@ public class Cliente {
     public void setFechaAlta(LocalDateTime fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
+
+    @Override
+    public String toString() {
+        return nombre + " " + apellidos + " (" + dni + ")";
+    }
 }

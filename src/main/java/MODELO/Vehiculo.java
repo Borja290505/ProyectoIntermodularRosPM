@@ -1,6 +1,6 @@
 package MODELO;
 
-public class Vehiculo {
+public class    Vehiculo {
 
     private String matricula;
     private String bastidor;
@@ -9,12 +9,12 @@ public class Vehiculo {
     private int anio;
     private int kmsActuales;
 
-    private Cliente cliente;
+    private int cliente;
 
     public Vehiculo() {
     }
 
-    public Vehiculo(String matricula, String bastidor, String marca, String modelo, int anio, int kmsActuales, Cliente cliente) {
+    public Vehiculo(String matricula, String bastidor, String marca, String modelo, int anio, int kmsActuales, int cliente) {
         this.matricula = matricula;
         this.bastidor = bastidor;
         this.marca = marca;
@@ -72,11 +72,11 @@ public class Vehiculo {
         this.kmsActuales = kmsActuales;
     }
 
-    public Cliente getCliente() {
+    public int getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(int cliente) {
         this.cliente = cliente;
     }
 }

@@ -4,6 +4,8 @@ import CONFIGURADOR.ConexionBD;
 import MODELO.Cliente;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClienteDAO {
 
@@ -57,5 +59,60 @@ public class ClienteDAO {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public Cliente obtenerClientePorDni(String dni) {
+
+        String sql = "SELECT * FROM cliente WHERE dni = ?";
+
+        try (Connection con = ConexionBD.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, dni);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Cliente c = new Cliente();
+                c.setIdCliente(rs.getInt("idCliente"));
+                c.setDni(rs.getString("dni"));
+                c.setNombre(rs.getString("nombre"));
+                c.setApellidos(rs.getString("apellidos"));
+                c.setTelefono(rs.getString("telefono"));
+                c.setDireccion(rs.getString("direccion"));
+                c.setEmail(rs.getString("email"));
+                return c;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public List<Cliente> listarClientes() {
+
+        List<Cliente> lista = new ArrayList<>();
+
+        String sql = "SELECT * FROM cliente";
+
+        try (Connection con = ConexionBD.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Cliente c = new Cliente();
+                c.setIdCliente(rs.getInt("idCliente"));
+                c.setDni(rs.getString("dni"));
+                c.setNombre(rs.getString("nombre"));
+                c.setApellidos(rs.getString("apellidos"));
+                lista.add(c);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lista;
     }
 }

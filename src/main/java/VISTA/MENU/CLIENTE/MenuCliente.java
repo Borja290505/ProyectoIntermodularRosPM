@@ -1,4 +1,6 @@
-package VISTA;
+package VISTA.MENU.CLIENTE;
+
+import VISTA.VentanaBase;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,9 +35,10 @@ public class MenuCliente extends VentanaBase {
         btnBajaCliente.setPreferredSize(tamaño);
         btnListarCliente.setPreferredSize(tamaño);
 
-        btnAltaCliente.setFont(new Font("Arial", Font.BOLD, 14));
-        btnBajaCliente.setFont(new Font("Arial", Font.BOLD, 14));
-        btnListarCliente.setFont(new Font("Arial", Font.BOLD, 14));
+        Font fuente = new Font("Arial", Font.BOLD,14);
+        btnAltaCliente.setFont(fuente);
+        btnBajaCliente.setFont(fuente);
+        btnListarCliente.setFont(fuente);
 
         panelBotones.add(btnAltaCliente);
         panelBotones.add(btnBajaCliente);
