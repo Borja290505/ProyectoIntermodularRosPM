@@ -10,6 +10,7 @@ public class MenuVehiculo extends VentanaBase {
     private JButton btnAltaVehiculo;
     private JButton btnBajaVehiculo;
     private JButton btnListarVehiculo;
+    private JButton btnModificarVehiculo;
     private JButton btnVolver;
 
     public MenuVehiculo() {
@@ -25,25 +26,30 @@ public class MenuVehiculo extends VentanaBase {
         add(titulo, BorderLayout.NORTH);
 
 
-        JPanel panelBotones = new JPanel(new GridLayout(1, 2, 40, 0));
+        JPanel panelBotones = new JPanel(new GridLayout(2, 2, 40, 40));
         panelBotones.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
 
         btnAltaVehiculo = new JButton("Alta Vehículo");
         btnBajaVehiculo = new JButton("Baja Vehículo");
         btnListarVehiculo = new JButton("Lista Vehiculos");
+        btnModificarVehiculo = new JButton("Modificar Vehiculos");
 
         Dimension tamaño = new Dimension(180, 120);
         btnAltaVehiculo.setPreferredSize(tamaño);
         btnBajaVehiculo.setPreferredSize(tamaño);
         btnListarVehiculo.setPreferredSize(tamaño);
+        btnModificarVehiculo.setPreferredSize(tamaño);
 
-        btnAltaVehiculo.setFont(new Font("Arial", Font.BOLD, 14));
-        btnBajaVehiculo.setFont(new Font("Arial", Font.BOLD, 14));
-        btnListarVehiculo.setFont(new Font("Arial",Font.BOLD,14));
+        Font fuente = new Font("Arial", Font.BOLD, 14);
+        btnAltaVehiculo.setFont(fuente);
+        btnBajaVehiculo.setFont(fuente);
+        btnListarVehiculo.setFont(fuente);
+        btnModificarVehiculo.setFont(fuente);
 
         panelBotones.add(btnAltaVehiculo);
         panelBotones.add(btnBajaVehiculo);
         panelBotones.add(btnListarVehiculo);
+        panelBotones.add(btnModificarVehiculo);
 
         add(panelBotones, BorderLayout.CENTER);
 
@@ -70,6 +76,10 @@ public class MenuVehiculo extends VentanaBase {
 
     public JButton getBtnListarVehiculo() {
         return btnListarVehiculo;
+    }
+
+    public JButton getBtnModificarVehiculo() {
+        return btnModificarVehiculo;
     }
 
     public JButton getBtnVolver() {

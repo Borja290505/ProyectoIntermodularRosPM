@@ -22,7 +22,7 @@ public class MenuOrden extends VentanaBase {
         titulo.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
         add(titulo, BorderLayout.NORTH);
 
-        JPanel panelBotones = new JPanel(new GridLayout(1, 2, 40, 0));
+        JPanel panelBotones = new JPanel(new GridLayout(1, 1, 40, 0));
         panelBotones.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
 
         btnListarOrdenes = new JButton("ListarOrdenes");

@@ -7,24 +7,24 @@ import MODELO.Vehiculo;
 import UTIL.LoginApp;
 
 import VISTA.INICIO.RegistroCliente;
-import VISTA.INICIO.InicioSesionCliente;
 import VISTA.INICIO.PaginaInicio;
 
 import VISTA.MENU.CLIENTE.MenuCliente;
 import VISTA.MENU.ORDEN.MenuOrden;
 import VISTA.MENU.PRINCIPAL.MenuPrincipal;
+import VISTA.MENU.VEHICULO.BajaVehiculo;
+import VISTA.MENU.VEHICULO.ListarVehiculo;
 import VISTA.MENU.VEHICULO.MenuVehiculo;
-import VISTA.MENU.VEHICULO.RegistroVehiculo;
+import VISTA.MENU.VEHICULO.AltaVehiculo;
 
-import static DAO.VehiculoDAO.InsertarVehiculo;
+import javax.swing.*;
+import java.util.List;
 
 public class ClienteControlador {
 
     private PaginaInicio inicioVista;
     private ClienteDAO clienteDAO;
     private VehiculoDAO vehiculoDAO;
-
-    // 🔥 CLIENTE LOGUEADO
     private Cliente clienteActivo;
 
     public ClienteControlador() {
@@ -34,14 +34,34 @@ public class ClienteControlador {
 
         inicioVista = new PaginaInicio();
 
+
+        inicioVista.getBtnInicioSesion().addActionListener(e -> {
+
+            String usuario = inicioVista.getTxtUsuario().getText().trim();
+            String pass = new String(inicioVista.getTxtPassword().getPassword()).trim();
+
+            boolean loginCorrecto = clienteDAO.loginCliente(usuario, pass);
+
+            LoginApp.registrarLogin(usuario, loginCorrecto);
+
+            if (loginCorrecto) {
+                clienteActivo = clienteDAO.obtenerClientePorDni(usuario);
+
+                inicioVista.dispose();
+                abrirMenuPrincipal();
+
+            } else {
+                JOptionPane.showMessageDialog(
+                        inicioVista,
+                        "Usuario o contraseña incorrectos"
+                );
+            }
+        });
+
+
         inicioVista.getBtnRegistro().addActionListener(e -> {
             inicioVista.dispose();
             abrirRegistro();
-        });
-
-        inicioVista.getBtnInicioSesion().addActionListener(e -> {
-            inicioVista.dispose();
-            abrirInicioSesion();
         });
     }
 
@@ -52,8 +72,8 @@ public class ClienteControlador {
     */
     private void abrirRegistro() {
 
-        RegistroCliente.RegistroCliente registroVista =
-                new RegistroCliente.DatosRegistroCliente();
+        RegistroCliente registroVista =
+                new RegistroCliente();
 
         registroVista.getBtnRegistrar().addActionListener(e -> {
             try {
@@ -62,6 +82,7 @@ public class ClienteControlador {
 
                 clienteDAO.insertarCliente(c);
                 registroVista.mostrarMensaje("Cliente registrado correctamente");
+                new ClienteControlador();
 
             } catch (Exception ex) {
                 registroVista.mostrarMensaje("Error al registrar cliente");
@@ -70,43 +91,6 @@ public class ClienteControlador {
 
         registroVista.getBtnVolver().addActionListener(e -> {
             registroVista.dispose();
-            new ClienteControlador();
-        });
-    }
-
-    /*
-    =========================
-    =     LOGIN USUARIO     =
-    =========================
-    */
-    private void abrirInicioSesion() {
-
-        InicioSesionCliente loginVista = new InicioSesionCliente();
-
-        loginVista.getBtnEntrar().addActionListener(e -> {
-
-            String usuario = loginVista.getUsuario();
-            String pass = loginVista.getPassword();
-
-            boolean loginCorrecto =
-                    clienteDAO.loginCliente(usuario, pass);
-
-            LoginApp.registrarLogin(usuario, loginCorrecto);
-
-            if (loginCorrecto) {
-                // 🔥 CARGAMOS EL CLIENTE COMPLETO
-                clienteActivo = clienteDAO.obtenerClientePorDni(usuario);
-
-                loginVista.dispose();
-                abrirMenuPrincipal();
-
-            } else {
-                loginVista.mostrarMensaje("Usuario o contraseña incorrectos");
-            }
-        });
-
-        loginVista.getBtnVolver().addActionListener(e -> {
-            loginVista.dispose();
             new ClienteControlador();
         });
     }
@@ -152,6 +136,16 @@ public class ClienteControlador {
             abrirAltaVehiculo();
         });
 
+        menuVehiculo.getBtnBajaVehiculo().addActionListener(e -> {
+            menuVehiculo.dispose();
+            abrirBajaVehiculo();
+        });
+
+        menuVehiculo.getBtnListarVehiculo().addActionListener(e -> {
+            menuVehiculo.dispose();
+            abrirListarVehiculos();
+        });
+
         menuVehiculo.getBtnVolver().addActionListener(e -> {
             menuVehiculo.dispose();
             abrirMenuPrincipal();
@@ -195,19 +189,56 @@ public class ClienteControlador {
     */
     private void abrirAltaVehiculo(){
 
-        RegistroVehiculo vista = new RegistroVehiculo();
+        AltaVehiculo altaVehiculo = new AltaVehiculo();
 
-        vista.getBtnGuardar().addActionListener(e -> {
+        altaVehiculo.getBtnGuardar().addActionListener(e -> {
             try {
-                vista.dispose();
+                altaVehiculo.dispose();
                 abrirMenuVehiculo();
             } catch (Exception ex) {
+                throw new RuntimeException(ex);
             }
         });
 
-        vista.getBtnVolver().addActionListener(e -> {
-            vista.dispose();
+        altaVehiculo.getBtnVolver().addActionListener(e -> {
+            altaVehiculo.dispose();
             abrirMenuVehiculo();
         });
+    }
+
+    private void abrirBajaVehiculo(){
+        BajaVehiculo bajaVehiculo = new BajaVehiculo();
+
+        bajaVehiculo.getBtnEliminar().addActionListener(e -> {
+            String matricula = bajaVehiculo.getTxtMatricula().getText().trim();
+
+            if (VehiculoDAO.EliminarVehiculo(matricula)) {
+                JOptionPane.showMessageDialog(bajaVehiculo, "Vehículo eliminado con éxito");
+                bajaVehiculo.getTxtMatricula().setText("");
+            } else {
+                JOptionPane.showMessageDialog(bajaVehiculo, "No se encontró la matrícula: " + matricula);
+            }
+
+        });
+
+        bajaVehiculo.getBtnVolver().addActionListener(e -> {
+            bajaVehiculo.dispose();
+            abrirMenuVehiculo();
+        });
+    }
+
+    private void abrirListarVehiculos() {
+        ListarVehiculo vistaLista = new ListarVehiculo();
+
+        // Cargamos los datos desde el DAO
+        List<Vehiculo> lista = VehiculoDAO.ListarVehiculos();
+        vistaLista.cargarDatos(lista);
+
+        vistaLista.getBtnVolver().addActionListener(e -> {
+            vistaLista.dispose();
+            abrirMenuVehiculo();
+        });
+
+        vistaLista.setVisible(true);
     }
 }

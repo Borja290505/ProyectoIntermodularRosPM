@@ -10,6 +10,7 @@ public class MenuCliente extends VentanaBase {
     private JButton btnAltaCliente;
     private JButton btnBajaCliente;
     private JButton btnListarCliente;
+    private JButton btnModificarCliente;
     private JButton btnVolver;
 
     public MenuCliente() {
@@ -23,26 +24,30 @@ public class MenuCliente extends VentanaBase {
         titulo.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
         add(titulo, BorderLayout.NORTH);
 
-        JPanel panelBotones = new JPanel(new GridLayout(1, 2, 40, 0));
+        JPanel panelBotones = new JPanel(new GridLayout(2, 2, 40, 40));
         panelBotones.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
 
         btnAltaCliente = new JButton("Alta Cliente");
         btnBajaCliente = new JButton("Baja Cliente");
         btnListarCliente = new JButton("Lista Clientes");
+        btnModificarCliente = new JButton("Lista Clientes");
 
         Dimension tamaño = new Dimension(180, 120);
         btnAltaCliente.setPreferredSize(tamaño);
         btnBajaCliente.setPreferredSize(tamaño);
         btnListarCliente.setPreferredSize(tamaño);
+        btnModificarCliente.setPreferredSize(tamaño);
 
         Font fuente = new Font("Arial", Font.BOLD,14);
         btnAltaCliente.setFont(fuente);
         btnBajaCliente.setFont(fuente);
         btnListarCliente.setFont(fuente);
+        btnModificarCliente.setFont(fuente);
 
         panelBotones.add(btnAltaCliente);
         panelBotones.add(btnBajaCliente);
         panelBotones.add(btnListarCliente);
+        panelBotones.add(btnModificarCliente);
 
         add(panelBotones, BorderLayout.CENTER);
 
@@ -68,6 +73,10 @@ public class MenuCliente extends VentanaBase {
 
     public JButton getBtnListarCliente() {
         return btnListarCliente;
+    }
+
+    public JButton getBtnModificarCliente() {
+        return btnModificarCliente;
     }
 
     public JButton getBtnVolver() {

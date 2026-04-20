@@ -12,14 +12,14 @@ import java.util.List;
 
 import static DAO.VehiculoDAO.InsertarVehiculo;
 
-public class RegistroVehiculo extends VentanaBase {
+public class AltaVehiculo extends VentanaBase {
 
     private JTextField txtMatricula, txtBastidor, txtMarca, txtModelo, txtAnio, txtKms;
     private JComboBox<Cliente> comboClientes;
     private JButton btnGuardar, btnVolver;
 
 
-    public RegistroVehiculo() {
+    public AltaVehiculo() {
         super("Alta Vehículo");
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -104,9 +104,6 @@ public class RegistroVehiculo extends VentanaBase {
         }
     }
 
-    // =========================
-    // GETTERS
-    // =========================
     public JButton getBtnGuardar() {
         return btnGuardar;
     }
